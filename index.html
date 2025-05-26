@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Text Editor</title>
+  <style>
+    body {
+      background: #767272;
+      font-family: Arial, sans-serif;
+    }
+    .editor-container {
+      width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding-bottom: 24px;
+    }
+    .toolbar {
+      background: #393d40;
+      color: #fff;
+      padding:12px 24px;
+      display: flex;
+      gap: 24px;
+      font-size: 28px;
+      align-items: center;
+      user-select: none;
+      margin-bottom: 16px;
+      justify-content: center;
+    }
+    .toolbar button {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 28px;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 0 8px;
+    }
+    .toolbar button.active,
+    .toolbar button:hover {
+      color: #2980ff;
+      text-decoration: underline;
+    }
+    .toolbar .color-btn {
+      color: #2980ff;
+      position: relative;
+    }
+    .toolbar .color-btn::after {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 3px;
+      background: #e74c3c;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -6px;
+      border-radius: 2px;
+    }
+
+    
+    .editor-content {
+      padding: 40px 24px;
+      font-size: 16px;
+      color: #222;
+      border: 1px solid #959090;
+      border-top: auto;
+      border-radius:6px 6px;
+      background: #ffffff;
+      min-height: 120px;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="editor-container">
+    <div class="toolbar">
+      <button type="button" title="Bold" onclick="format('bold')"><b>B</b></button>
+      <button type="button" title="Italic" onclick="format('italic')"><i>I</i></button>
+      <button type="button" title="Underline" onclick="format('underline')"><u>U</u></button>
+      <button type="button" title="Text Color" class="color-btn" id="colorBtn">A</button>
+      <input type="color" id="colorPicker" style="display:none; margin-left:-30px;" />
+      <button type="button" title="Align Left" onclick="format('justifyLeft')">
+      <svg width="24" height="24" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="2" fill="currentColor"/>
+      <rect x="3" y="10" width="12" height="2" fill="currentColor"/>
+      <rect x="3" y="15" width="18" height="2" fill="currentColor"/>
+      </svg>
+      </button>
+      <button type="button" title="Align Center" onclick="format('justifyCenter')">
+      <svg width="24" height="24" viewBox="0 0 24 24">
+      <rect x="6" y="5" width="12" height="2" fill="currentColor"/>
+      <rect x="3" y="10" width="18" height="2" fill="currentColor"/>
+      <rect x="6" y="15" width="12" height="2" fill="currentColor"/>
+      </svg>
+      </button>
+      </button>
+      <button type="button" title="Align Right" onclick="format('justifyRight')">
+      <svg width="24" height="24" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="2" fill="currentColor"/>
+      <rect x="9" y="10" width="12" height="2" fill="currentColor"/>
+      <rect x="3" y="15" width="18" height="2" fill="currentColor"/>
+      </svg>
+      </button>
+      <button type="button" title="Justify" onclick="format('justifyFull')">
+      <svg width="24" height="24" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="2" fill="currentColor"/>
+      <rect x="3" y="10" width="18" height="2" fill="currentColor"/>
+      <rect x="3" y="15" width="18" height="2" fill="currentColor"/>
+      </svg>
+      </button>
+      <button type="button" title="Undo" onclick="format('undo')">↶</button>
+      <button type="button" title="Redo" onclick="format('redo')">↷</button>
+    </div>
+    <div
+      class="editor-content"
+      id="editor"
+      contenteditable="true"
+      spellcheck="true"
+    >
+      It is a <b>long established</b> fact that a <u>reader will be distracted by the readable</u> content of <i><b>a page when looking</b></i> at its layout. The point of using <span style="color:#e74c3c;">Lorem Ipsum</span> is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humor and the like).
+    </div>
+  </div>
+  <script>
+    function format(command, value = null) {
+      document.execCommand(command, false, value);
+    }
+    const colorBtn = document.getElementById('colorBtn');
+  const colorPicker = document.getElementById('colorPicker');
+
+  colorBtn.addEventListener('click', function() {
+    colorPicker.click(); 
+  });
+
+  colorPicker.addEventListener('input', function() {
+    format('foreColor', this.value);
+  });
+  </script>
+</body>
+</html>
